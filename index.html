@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Ebook Generator</title>
+</head>
+<body>
+
+<h1>AI Ebook Generator</h1>
+
+<input type="text" id="topic" placeholder="Masukkan topik ebook">
+<button onclick="generate()">Generate</button>
+
+<pre id="result"></pre>
+
+<script>
+async function generate(){
+
+  const topic = document.getElementById("topic").value;
+
+  const response = await fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ topic })
+  });
+
+  const data = await response.json();
+
+  document.getElementById("result").innerText =
+    data.choices?.[0]?.message?.content || "Error generating ebook.";
+}
+</script>
+
+</body>
+</html>
